@@ -29,4 +29,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   target_link_options(main PRIVATE -fsanitize=address,undefined)
   target_compile_options(unit_tests PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer -g)
   target_link_options(unit_tests PRIVATE -fsanitize=address,undefined)
+  # Disable leak detection in this environment to avoid LeakSanitizer fatal errors under ptrace.
+  set_tests_properties(unit PROPERTIES ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0")
 endif()
